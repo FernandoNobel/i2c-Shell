@@ -16,28 +16,13 @@ def sendCommand(line):
         
 def reciveResponse():
     ans = ''
-    time.sleep(1)
-    #while True:
-    #c = bus.read_byte(address)
-    # c = bus.read_i2c_block_data(address,0,256)
+    time.sleep(0.1)
+
     with SMBus(1) as bus:
-        # Read 64 bytes from address 80
-        msg = i2c_msg.read(address, 1024)
+        msg = i2c_msg.read(address, 128)
         bus.i2c_rdwr(msg)
-        print(msg)
 
-
-    #c = bus.read_word_data(address)
-    #print(c)
-    #c = chr(c)
-    #print(c)
-    #if c == '\0':
-        #break
-    #ans += c
-    #print(c)
-
-    print(ans)
-    return ans
+    return msg.__str__()
 
 while True:
     print(">>: ", end='')
@@ -48,5 +33,5 @@ while True:
 
     sendCommand(line)
 
-    ans = reciveResponse()
-    print("<<: " + ans)
+    msg = reciveResponse()
+    print( msg.split("ÿ",1)[0] )
