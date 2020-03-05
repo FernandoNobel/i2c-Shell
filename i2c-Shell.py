@@ -24,12 +24,18 @@ def reciveResponse():
 
     return msg.__str__()
 
+last_command = ""
 while True:
     print(">>: ", end='')
     line = input()
 
     if line == "exit":
         break
+    
+    if line == ".":
+        line = last_command
+
+    last_command = line
 
     sendCommand(line)
 
